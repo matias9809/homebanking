@@ -1,0 +1,350 @@
+
+@import url('https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i');
+
+
+.main-cards{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cuentas-container-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    height: fit-content;
+    padding:  0 10px;
+    width: 100%;
+    background: #184e8e;
+    border-radius: 1rem;
+}
+.caja-cont1 , .caja-cont2{
+    width: 100%;
+    height: 50%;
+}
+
+.caja-cont1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 60%;
+}
+
+.caja-cont2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 40%;
+}
+
+.caja11, .caja22, .caja33, .caja44{
+    display: flex;
+}
+
+.caja11{
+
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 17px;
+}
+
+.caja11 i.bx.bxl-visa {
+    font-size: 5rem;
+}
+
+
+.caja22{
+    width: 100%;
+    justify-content: center;
+    font-size:17px;
+    letter-spacing: 1px;
+}
+
+
+.caja-cont2 .caja33 {
+    width: 100%;
+    font-size: 12px;
+    padding: 0 10px;
+}
+
+.caja-cont2 .caja33 .fromDate {
+    padding: 0 6px;
+}
+
+.caja-cont2 .caja33 .thruDate {
+    padding-left: 2rem;
+}
+
+.caja44{
+    width: 100%;
+    padding: 0 17px;
+    justify-content: space-between
+}
+
+
+.SILVER{
+    background:linear-gradient( to bottom, #bcc6cc, #eee, #bcc6cc);
+    color: black;
+}
+
+.SILVER:after {
+    animation-delay:2s;
+}
+
+.GOLD{
+    background:linear-gradient( to bottom, #c39738, #deb761, #c39738);
+}
+
+.GOLD:after {
+    animation-delay: 1s;
+}
+
+.TITANIUM{
+    background: linear-gradient(to bottom, #d5d7e5, #eee, #d5d7e5);
+    color: goldenrod
+}
+
+.TITANIUM:after {
+    animation-delay:2s;
+}
+
+.card{
+    width: 100%;
+    height: 190px;
+    -webkit-perspective: 600px;
+    -moz-perspective: 600px;
+    perspective:600px;
+    background: #184e8e;
+    border: none;
+    font-family: 'Space Mono', monospace;
+    margin: 10px;
+}
+
+.card__part{
+    box-shadow: 1px 1px #aaa3a3;
+    top: 0;
+    position: absolute;
+    z-index: 1000;
+    left: 0;
+    display: inline-block;
+    width: 320px;
+    height: 190px;
+    /* background-image: url('https://image.ibb.co/bVnMrc/g3095.png'), linear-gradient(to right bottom, #fd696b, #fa616e, #f65871, #f15075, #ec4879); */  /*linear-gradient(to right bottom, #fd8369, #fc7870, #f96e78, #f56581, #ee5d8a)*/
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 8px;
+    -webkit-transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -moz-transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -ms-transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -o-transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    overflow: hidden; 
+    box-shadow: 0 12px 9px -6px black;
+}
+
+
+.card__part:after {
+    content: '';
+    top: 0;
+    transform: translateX(100%) rotate(30deg);
+    width: 600%;
+    height: 600%;
+    position: absolute;
+    z-index: 1;
+    animation: shine 5s infinite ease-in;
+
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(128, 186, 232, 0) 99%, rgba(128, 186, 232, 0) 100%);
+}
+
+
+@keyframes shine {
+
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(30deg);
+    }
+
+    80% {
+        transform: translateX(-100%) translateY(-100%) rotate(30deg);
+    }
+
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(30deg);
+    }
+
+}
+
+.card__front{
+    -webkit-transform: rotateY(0);
+    -moz-transform: rotateY(0);
+}  
+
+.card__back {
+    padding: 18px 0;
+    -webkit-transform: rotateY(-180deg);
+    -moz-transform: rotateY(-180deg);
+    width: 100%;
+}
+
+.card__black-line {
+    margin-top: 5px;
+    height: 38px;
+    background-color: #303030;
+    width: 100%;
+}
+
+.card__logo {
+    height: 16px;
+}
+
+
+.card__square {
+    border-radius: 5px;
+    height: 30px;
+}
+
+
+
+
+.card__back-content {
+    padding: 15px 15px 0;
+    width: 100%;
+}
+.card__secret--last {
+    color: #303030;
+    text-align: right;
+    margin: 0;
+    font-size: 14px;
+    width: 100%;
+}
+
+.card__secret {
+    padding: 5px 12px;
+    background-color: #fff;
+    position:relative;
+}
+
+.card__secret:before{
+    content:'';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    height: calc(100% + 6px);
+    width: calc(100% - 42px);
+    border-radius: 4px;
+    background: repeating-linear-gradient(45deg, #ededed, #ededed 5px, #f9f9f9 5px, #f9f9f9 10px);
+}
+
+.card__back-logo {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
+
+.card__back-square {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+}
+
+.card:hover .card__front {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+
+}
+
+.card:hover .card__back {
+    -webkit-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+}
+@media(min-width: 375px) {
+    .caja22{
+        font-size: 21px;
+    }
+    .card{
+        width: 320px;
+    }
+
+    .cuentas-container-card{
+        width: fit-content;
+    }
+}
+
+@media(min-width: 425px) {
+    .card{
+        width: 320px;
+    }
+
+    .cuentas-container-card{
+        width: fit-content;
+    }
+
+    .caja22{
+        font-size: 23px;
+    }
+
+}
+@media (min-width: 1024px) {
+    .cuentas-container-card {
+        flex-direction: unset;
+        flex-wrap: wrap;
+        height: fit-content;
+        width: fit-content;
+        border-radius: 1rem;
+    }
+
+    .caja22{
+        font-size: 23px;
+    }
+
+    .main-cards{
+        display: flex;
+    }
+}
+
+@media (min-width: 1368px) {
+    .cuentas-container-card {
+        flex-direction: unset;
+        flex-wrap: wrap;
+        height: fit-content;
+        width: fit-content;
+        border-radius: 1rem;
+    }
+    .caja22 {
+        font-size: 23px;
+    }
+}
+
+@media (min-width: 1440px) {
+        .cuentas-container-card {
+        flex-direction: unset;
+        flex-wrap: wrap;
+        height: fit-content;
+        width: fit-content;
+        border-radius: 1rem;
+    }
+    .caja22 {
+        font-size: 23.1px;
+    }
+}
+
+@media (min-width: 1920px) {
+
+    .caja22 {
+        font-size: 23px;
+    }
+
+    
+}
