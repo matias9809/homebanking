@@ -3,7 +3,9 @@ package com.mindhub.homebanking.controller;
 import com.mindhub.homebanking.DTO.ClientDTO;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,6 +31,10 @@ public class ControllerClient {
     public Optional<ClientDTO> getClient(@PathVariable Long id){
         return clientrepository.findById(id).map(client ->new ClientDTO(client));
     }
+//    @RequestMapping("clients/current")
+//    public Optional<ClientDTO> getClientcurrent(@PathVariable Authentication authentication){
+//        return clientrepository.findByEmail(authentication.name()).map(client->new ClientDTO(client));
+//    }
     @RequestMapping(path = "/clients", method = RequestMethod.POST)
 
     public ResponseEntity<Object> register(

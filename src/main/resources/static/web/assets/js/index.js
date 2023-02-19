@@ -13,7 +13,6 @@ createApp( {
         }
     },
     created(){
-       
     },
     methods: {
         login(){
@@ -22,13 +21,15 @@ createApp( {
                         'content-type':'application/x-www-form-urlencoded'
                     }
                 })
-                .then(response => 
-                        console.log('signed in!!!')
-                )
-                .catch(err=>console.log(err))
+                .then((response) => {
+                    if (response) {
+                        location.href = "./accounts.html";
+                    }
+                })
+                .catch(err=>alert("Email or password was not correct"))
         },
         singin(){
-            axios.post('/api/clients',"firstName=pedro2&lastName=rodriguez&email=pedro@mindhub.com&password=pedro",{
+            axios.post('/api/clients',`firstName=${this.firstname}&lastName=${this.lastname}&email=${this.singin_email}&password=${this.singin_password}`,{
             headers:{'content-type':'application/x-www-form-urlencoded'}})
             .then(response => console.log('registered'))
             .catch(err=>console.log(err))
