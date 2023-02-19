@@ -20,6 +20,9 @@
 main{
     min-height: 89vh;
 }
+.logo{
+    width: 40px;
+}
 .account{
     display: flex;
     flex-direction: column;

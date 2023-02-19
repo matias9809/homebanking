@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.configurations;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -20,6 +21,9 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/manager/manager.html").hasAuthority("ADMIN")
                 .antMatchers("/h2-console").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/clients").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/api/clients").hasRole("ADMIN")
                 .antMatchers("/web/index.html").permitAll()
                 .antMatchers("/web/accounts.html").hasAuthority("CLIENT")
                 .antMatchers("/web/account.html").hasAuthority("CLIENT")

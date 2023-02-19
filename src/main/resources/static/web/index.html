@@ -10,8 +10,8 @@
     <title>Stark Banking/accounts</title>
 </head>
 <body class="body text-white" id="app">
-    <header class="d-flex flex-wrap justify-content-start justify-content-md-start">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <header class="d-flex flex-wrap justify-content-start">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary ">
             <div class="container-fluid">
             <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -28,19 +28,54 @@
                         </li>
                     </ul>
                 </div>
-                <div><button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    log in
-                </button></div>
+                <div class="container-fluid">
+                <button type="button" class="btn btn-outline-success me-2 mt-2 mt-md-0" data-bs-toggle="modal" data-bs-target="#login">log in</button>
+                <button type="button" class="btn btn-outline-success mt-2 mt-md-0" data-bs-toggle="modal" data-bs-target="#singin">singin</button>
             </div>
+            </div>
+            
+            
+
         </nav>
     </header>
     <main class=" d-flex flex-column ">
-        <div>
-            <h1>Stark Banking</h1>
-            <img src="./assets/img/77167580-banca-logotipo-conceptual-símbolo-único-vector-sistema-bancario-.webp" alt="logo">    
+        <div class="row">
+            <h1 class="text-center">Stark Banking <img class="logo" src="./assets/img/77167580-banca-logotipo-conceptual-símbolo-único-vector-sistema-bancario-.webp" alt="logo">  </h1>
+              
         </div>
 
-            <div class="body modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="body modal fade" id="singin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">sing in</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="d-flex flex-column ">
+                                    <h1 class="mb-2 col-5 text-dark">sing in</h1>
+                                    <label for="firstname" class="mb-2 col-9  text-dark"> Firstname:
+                                        <input class="form-control me-2" autocomplete="off" type="text" id="firstname" v-model="firstname">
+                                    </label>
+                                    <label for="lastname" class="mb-2 col-9 text-dark">Lastname:
+                                        <input class="form-control me-2" autocomplete="off" type="text" id="lastname" v-model="lastname">
+                                    </label>
+                                    <label for="email" class="mb-2 col-9  text-dark"> Email:
+                                        <input class="form-control me-2" autocomplete="off" type="text" id="email" v-model="singin_email">
+                                    </label>
+                                    <label for="password" class="mb-2 col-9 text-dark">Password:
+                                        <input class="form-control me-2" autocomplete="off" type="password" id="password" v-model="singin_password">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" @click="singin">log in</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="body modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -50,11 +85,11 @@
                             <div class="modal-body">
                                 <div class="d-flex flex-column ">
                                     <h1 class="mb-2 col-5 text-dark">log in</h1>
-                                    <label for="firstname" class="mb-2 col-9  text-dark"> Email:
-                                        <input class="form-control me-2" autocomplete="off" type="text" id="firstname" v-model="email">
+                                    <label for="email" class="mb-2 col-9  text-dark"> Email:
+                                        <input class="form-control me-2" autocomplete="off" type="text" id="email" v-model="email">
                                     </label>
-                                    <label for="lastname" class="mb-2 col-9 text-dark">Password:
-                                        <input class="form-control me-2" autocomplete="off" type="password" id="lastname" v-model="password">
+                                    <label for="password" class="mb-2 col-9 text-dark">Password:
+                                        <input class="form-control me-2" autocomplete="off" type="password" id="password" v-model="password">
                                     </label>
                                 </div>
                             </div>
