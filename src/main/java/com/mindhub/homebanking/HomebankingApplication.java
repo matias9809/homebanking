@@ -11,7 +11,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+
+import static com.mindhub.homebanking.utilities.Utils.NumberCards;
 
 
 @SpringBootApplication
@@ -45,18 +48,20 @@ public class HomebankingApplication {
 					"accreditation of assets",LocalDateTime.now().plusDays(2));
 			Transaction trans6=new Transaction(TransactionType.DEBIT,-25000.00,"fueling",LocalDateTime.now().plusDays(3));
 
-			Loan mortage=new Loan("Mortgage",500000, List.of(12,24,36,48,60));
-			Loan automotive=new Loan("Automotive",300000, List.of(6,12,24,36));
-			Loan personal=new Loan("Personal",100000, List.of(6,12,24));
+			Loan mortage=new Loan("Mortgage",500000,Arrays.asList(12,24,36,48,60));
+			Loan automotive=new Loan("Automotive",300000, Arrays.asList(6,12,24,36));
+			Loan personal=new Loan("Personal",100000,Arrays.asList(6,12,24));
 
 			ClientLoan clientLoan=new ClientLoan(12,50000);
 			ClientLoan clientLoan2=new ClientLoan(60,400000);
 			ClientLoan clientLoan3=new ClientLoan(24,100000);
 			ClientLoan clientLoan4=new ClientLoan(36,200000);
 
-			Card card1=new Card(client.getLastname()+" "+client.getFirstname(), TypeCard.DEBIT, ColorCard.GOLD,Number(cardRepository)
+			Card card1=new Card(client.getLastname()+" "+client.getFirstname(), TypeCard.DEBIT, ColorCard.GOLD,NumberCards(cardRepository)
 					,LocalDate.now(), LocalDate.now().plusYears(5));
-			Card card2=new Card(client.getLastname()+" "+client.getFirstname(), TypeCard.CREDIT, ColorCard.TITANIUM,Number(cardRepository)
+			Card card2=new Card(client.getLastname()+" "+client.getFirstname(), TypeCard.CREDIT, ColorCard.TITANIUM,NumberCards(cardRepository)
+					,LocalDate.now(), LocalDate.now().plusYears(5));
+			Card card3=new Card(client.getLastname()+" "+client.getFirstname(), TypeCard.CREDIT, ColorCard.SILVER,NumberCards(cardRepository)
 					,LocalDate.now(), LocalDate.now().plusYears(5));
 
 
@@ -71,7 +76,7 @@ public class HomebankingApplication {
 			VIN001.addTransaction(trans1);
 			VIN001.addTransaction(trans2);
 			VIN002.addTransaction(trans3);
-			VIN002.addTransaction(trans4);
+			VIN005.addTransaction(trans4);
 			VIN003.addTransaction(trans5);
 			VIN004.addTransaction(trans6);
 
@@ -83,10 +88,11 @@ public class HomebankingApplication {
 			client2.addClientLoan(clientLoan3);
 			client2.addClientLoan(clientLoan4);
 			personal.addClientLoans(clientLoan3);
-			personal.addClientLoans(clientLoan4);
+			automotive.addClientLoans(clientLoan4);
 
 			client.addCard(card1);
 			client.addCard(card2);
+			client2.addCard(card3);
 
 			repoLoans.save(mortage);
 			repoLoans.save(automotive);
@@ -110,28 +116,13 @@ public class HomebankingApplication {
 
 			repoclientLoans.save(clientLoan);
 			repoclientLoans.save(clientLoan2);
+			repoclientLoans.save(clientLoan3);
+			repoclientLoans.save(clientLoan4);
 
 			cardRepository.save(card1);
 			cardRepository.save(card2);
+			cardRepository.save(card3);
 		};
-	}
-	public static String GenereteNumber(){
-		int number1_1=(int) (Math.random() * (5- 4)+4);
-		int number1=(int) (Math.random() * (999 - 100) + 100);
-		int number2=(int) (Math.random() * (9999 - 1000) + 1000);
-		int number3=(int) (Math.random() * (9999 - 1000) + 1000);
-		int number4=(int) (Math.random() * (9999 - 1000) + 1000);
-		String number =number1_1+""+number1+"-"+number2+"-"+number3+"-"+number4;
-		return number;
-	}
-	public static String Number(CardRepository cardRepo){
-		String Number;
-		boolean verifyNumber;
-		do {
-			Number=GenereteNumber();
-			verifyNumber=cardRepo.existsByNumber(Number);
-		}while(verifyNumber);
-		return Number;
 	}
 
 }

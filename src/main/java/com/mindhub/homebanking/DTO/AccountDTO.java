@@ -11,13 +11,13 @@ public class AccountDTO {
     private String number;
     private LocalDateTime creationDate;
     private Double balance;
-    private Set<TransactionDTO> transactionDTO;
+    private Set<TransactionDTO> transaction;
     public AccountDTO(Account acco){
         this.id= acco.getId();
         this.number= acco.getNumber();
         this.creationDate=acco.getCreationDate();
         this.balance=acco.getBalance();
-        this.transactionDTO=acco.getTransactions().stream().map(TransactionDTO::new).collect(Collectors.toSet());
+        this.transaction=acco.getTransactions().stream().map(TransactionDTO::new).collect(Collectors.toSet());
     }
     public String getNumber(){
         return number;
@@ -36,6 +36,6 @@ public class AccountDTO {
         return id;
     }
     public Set<TransactionDTO> getTransaction() {
-        return transactionDTO;
+        return transaction;
     }
 }

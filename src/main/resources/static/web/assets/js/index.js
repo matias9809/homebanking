@@ -7,8 +7,7 @@ createApp( {
             password:"",
             firstname:"",
             lastname:"",
-            singin_password:"",
-            singin_email:""
+
 
         }
     },
@@ -29,9 +28,9 @@ createApp( {
                 .catch(err=>alert("Email or password was not correct"))
         },
         singin(){
-            axios.post('/api/clients',`firstName=${this.firstname}&lastName=${this.lastname}&email=${this.singin_email}&password=${this.singin_password}`,{
+            axios.post('/api/clients',`firstName=${this.firstname}&lastName=${this.lastname}&email=${this.email}&password=${this.password}`,{
             headers:{'content-type':'application/x-www-form-urlencoded'}})
-            .then(response => console.log('registered'))
+            .then(response => this.login())
             .catch(err=>console.log(err))
         }
     },

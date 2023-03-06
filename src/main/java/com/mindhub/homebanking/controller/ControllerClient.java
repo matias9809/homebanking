@@ -1,19 +1,22 @@
 package com.mindhub.homebanking.controller;
 
 import com.mindhub.homebanking.DTO.ClientDTO;
+import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static com.mindhub.homebanking.utilities.Utils.AccountNumber;
 import static java.util.stream.Collectors.toList;
 
 @RestController
@@ -23,6 +26,9 @@ public class ControllerClient {
     private ClientRepository clientrepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private AccountRepository accountRepository;
+
     @RequestMapping("/clients")
     public List<ClientDTO> getAll() {
         return clientrepository.findAll().stream().map(ClientDTO::new).collect(toList());
@@ -31,12 +37,11 @@ public class ControllerClient {
     public Optional<ClientDTO> getClient(@PathVariable Long id){
         return clientrepository.findById(id).map(client ->new ClientDTO(client));
     }
-//    @RequestMapping("clients/current")
-//    public Optional<ClientDTO> getClientcurrent(@PathVariable Authentication authentication){
-//        return clientrepository.findByEmail(authentication.name()).map(client->new ClientDTO(client));
-//    }
+    @RequestMapping("/clients/current")
+    public ClientDTO getCientAuthentic(Authentication authentication) {
+        return new ClientDTO(clientrepository.findByEmail(authentication.getName()));
+    }
     @RequestMapping(path = "/clients", method = RequestMethod.POST)
-
     public ResponseEntity<Object> register(
 
             @RequestParam String firstName, @RequestParam String lastName,
@@ -45,27 +50,35 @@ public class ControllerClient {
 
 
 
-        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
-
-            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
-
+        if (firstName.isEmpty()) {
+            return new ResponseEntity<>("Missing firstname", HttpStatus.BAD_REQUEST);
         }
-
+        else if (lastName.isEmpty()) {
+            return new ResponseEntity<>("Missing lastname", HttpStatus.BAD_REQUEST);
+        } else if (email.isEmpty() ) {
+            return new ResponseEntity<>("Missing email", HttpStatus.BAD_REQUEST);
+        } else if (password.isEmpty()) {
+            return new ResponseEntity<>("Missing password", HttpStatus.BAD_REQUEST);
+        }
 
 
         if (clientrepository.findByEmail(email) !=  null) {
 
-            return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("email already in use", HttpStatus.BAD_REQUEST);
 
         }
 
 
+        Client clientNewUser=new Client(firstName, lastName, email, passwordEncoder.encode(password));
 
-        clientrepository.save(new Client(firstName, lastName, email, passwordEncoder.encode(password)));
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        Account accountNewUser=new Account(AccountNumber(accountRepository), LocalDateTime.now(),0.00);
+        clientNewUser.addAccounts(accountNewUser);
+        clientrepository.save(clientNewUser);
+        accountRepository.save(accountNewUser);
+        return new ResponseEntity<>("user created successfully",HttpStatus.CREATED);
 
     }
+
 
 
 }

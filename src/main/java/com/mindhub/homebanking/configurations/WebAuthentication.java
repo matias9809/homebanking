@@ -13,12 +13,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Objects;
-
 @Configuration
 public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
     @Autowired
-
     ClientRepository clientRepository;
 
 
@@ -29,14 +26,12 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
 
     }
     @Override
-
     public void init(AuthenticationManagerBuilder auth) throws Exception {
-
 
         auth.userDetailsService(inputName-> {
 
             Client  client= clientRepository.findByEmail(inputName);
-            if (Objects.equals(inputName,"ADMI@HOTMAIL.COM")){
+            if (client.getEmail().equals("ADMI@HOTMAIL.COM")){
                 return new User(client.getEmail(), client.getPassword(),
 
                         AuthorityUtils.createAuthorityList("ADMIN"));

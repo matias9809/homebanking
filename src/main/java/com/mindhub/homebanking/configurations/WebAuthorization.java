@@ -21,13 +21,19 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/manager/manager.html").hasAuthority("ADMIN")
                 .antMatchers("/h2-console").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
-                .antMatchers(HttpMethod.PUT, "/api/clients").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PATCH, "/api/clients").hasRole("ADMIN")
-                .antMatchers("/web/index.html").permitAll()
+                .antMatchers("/rest/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/clients").hasAuthority("ADMIN")
+                //.antMatchers(HttpMethod.GET, "/api/clients/{id}").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/clients/current").hasAuthority("CLIENT")
                 .antMatchers("/web/accounts.html").hasAuthority("CLIENT")
                 .antMatchers("/web/account.html").hasAuthority("CLIENT")
-                .antMatchers("/web/cards.html").hasAuthority("CLIENT");
+                .antMatchers("/web/cards.html").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/clients/current/cards").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/clients/current/account").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
+                .antMatchers("/web/index.html").permitAll();
+
+
 
 
         http.formLogin()
@@ -40,7 +46,7 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
 
 
 
-        http.logout().logoutUrl("/api/logout");
+        http.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");
 
 
         // turn off checking for CSRF tokens

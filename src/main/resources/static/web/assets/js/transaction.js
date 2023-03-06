@@ -8,17 +8,27 @@ createApp( {
                 lastname:"",
                 email:"",
             },
-            client:undefined,
-            accountFilter:undefined,
-            accounts:undefined,
+            client:[],
+            accountFilter:[],
+            accounts:[],
+            transactions:[]
             
 
         }
     },
     created(){
-        axios.get(`http://localhost:8080/api/clients/1`)
+        axios.get(`/api/clients/current`)
         .then(response=>{
             this.client=response.data;
+            this.accounts=response.data.account;
+            console.log(this.accounts)
+            let cadenaParametroUrl = location.search
+            let parametros = new URLSearchParams(cadenaParametroUrl)
+            let id= parametros.get("id")
+            this.accountFilter =this.accounts.find(account => account.id == id);
+            this.transactions=this.accountFilter.transaction.sort((a,b)=>a.id-b.id)
+            console.log(this.transactions)
+            console.log(this.accountFilter)
         })
         .catch(err=>console.log(err))
         axios.get(`http://localhost:8080/api/account`)
@@ -29,6 +39,9 @@ createApp( {
             let parametros = new URLSearchParams(cadenaParametroUrl)
             let id= parametros.get("id")
             this.accountFilter =this.accounts.find(account => account.id == id);
+            
+            this.transactions=this.accountFilter.transaction.sort((a,b)=>a.id-b.id)
+            console.log(this.transactions)
             console.log(this.accountFilter)
         })
         .catch(err=>console.log(err))
@@ -36,14 +49,17 @@ createApp( {
     },
     methods: {
         load_data:function(){
-            axios.get(`http://localhost:8080/api/clients/1`)
+            axios.get(`/api/clients/current`)
             .then(response=>{
                 this.client=response.data;
             })
             .catch(err=>console.log(err))
         },
         logout(){
-            axios.post('/api/logout').then(response => console.log('signed out!!!'))
+            axios.post('/api/logout')
+            .then(response => response => 
+                location.href = "./index.html")
+            .catch(err=>console.log(err))
         }
     },
 

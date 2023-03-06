@@ -1,0 +1,988 @@
+
+@import url('https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i');
+
+
+.cards-pag{
+    font-family: 'Noto Sans', sans-serif;
+    background: #edfeff;
+}
+
+p{
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.pb-2 {
+    padding-bottom: unset !important;
+}
+
+a{
+    text-decoration: none;
+
+}
+
+.account-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.loans-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.account-cards{
+    width: 100%;
+    text-align: center;
+}
+
+.account-data {
+    background: #648ca6;
+    width: 100%;
+    padding: 16px;
+    margin-top: 9px;
+    border-radius: 17px;
+    height: 94%;
+}
+.account-button{
+    align-items: center;
+    width: 91%;
+}
+.loans-data {
+    background: #648ca6;
+    width: 100%;
+    padding: 16px;
+    margin-top: 9px;
+    border-radius: 17px;
+}
+
+.contenedor-cont-account-cards {
+    width: 95%;
+}
+.number-account{
+    color: white;
+  
+}
+
+.balance-account {
+    margin-top: 10px;
+    color: white !important;
+}
+
+.title-account{
+    text-align: center;
+    color: #000;
+    margin-top: 20px;
+
+}
+
+.btn-create-card-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-create-card {
+    text-decoration: none;
+    background: #648ca6;
+    color: white;
+    padding: 10px;
+    border-radius: 13px;
+    margin-top: 10px;
+}
+
+
+.btn-create-card:hover {
+   background-color: #edfeff;
+   color: #648ca6;
+   border: 1px solid #648ca6;
+   cursor:pointer
+}
+
+.btn-logout{
+    color: white;
+    border: 1px solid white;
+}
+
+.header{
+    display: flex;
+    justify-content: center;
+}
+
+.main-cards{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background: #edfeff;
+    margin: 0;
+}
+
+.credit-card-title{
+    color: black;
+    display: flex;
+    justify-content: center;
+
+}
+
+
+/* CARDS */
+
+.credits-cards-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cuentas-container-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    height: fit-content;
+    padding:  0 10px;
+    width: 100%;
+    background: #edfeff;
+    border-radius: 1rem;
+}
+.caja-cont1 , .caja-cont2{
+    width: 100%;
+    height: 50%;
+}
+.contenedor-cont-account-cards {
+    padding-bottom: 5px;
+}
+
+.caja-cont1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 60%;
+}
+
+.caja-cont2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 40%;
+}
+
+.caja11, .caja22, .caja33, .caja44{
+    display: flex;
+}
+
+.caja11{
+
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 17px;
+}
+
+.caja11 i.bx.bxl-visa {
+    font-size: 5rem;
+}
+
+
+.caja22{
+    width: 100%;
+    justify-content: center;
+    font-size: 21px;
+    letter-spacing: 1px;
+}
+
+
+.caja-cont2 .caja33 {
+    width: 100%;
+    font-size: 12px;
+    padding: 0 10px;
+}
+
+.caja-cont2 .caja33 .fromDate {
+    padding: 0 6px !important;
+}
+
+.caja-cont2 .caja33 .thruDate {
+    padding-left: 2rem;
+}
+
+.caja44{
+    width: 100%;
+    padding: 0 17px;
+    justify-content: space-between
+}
+
+
+.SILVER{
+    background:linear-gradient( to bottom, #bcc6cc, #eee, #bcc6cc);
+    color: black;
+}
+
+.SILVER:after {
+    animation-delay:2s;
+}
+
+.GOLD{
+    background:linear-gradient( to bottom, #c39738, #deb761, #c39738);
+}
+
+.GOLD:after {
+    animation-delay: 1s;
+}
+
+.TITANIUM{
+    background: linear-gradient(to bottom, #d5d7e5, #eee, #d5d7e5);
+    color: goldenrod
+}
+
+.TITANIUM:after {
+    animation-delay:2s;
+}
+
+.cards-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card{
+    width: 100%;
+    height: 190px;
+    -webkit-perspective: 600px;
+    -moz-perspective: 600px;
+    perspective:600px;
+    background: #edfeff;
+    border: none;
+    font-family: 'Space Mono', monospace;
+    margin-top: 6px;
+}
+
+.card__part{
+
+    top: 0;
+    position: absolute;
+    z-index: 1000;
+    left: 0;
+    display: inline-block;
+    width: 320px;
+    height: 190px;
+    /* background-image: url('https://image.ibb.co/bVnMrc/g3095.png'), linear-gradient(to right bottom, #fd696b, #fa616e, #f65871, #f15075, #ec4879); */  /*linear-gradient(to right bottom, #fd8369, #fc7870, #f96e78, #f56581, #ee5d8a)*/
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 8px;
+    -webkit-transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -moz-transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -ms-transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -o-transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    overflow: hidden; 
+
+}
+
+
+.card__part:after {
+    content: '';
+    top: 0;
+    transform: translateX(100%) rotate(30deg);
+    width: 600%;
+    height: 600%;
+    position: absolute;
+    z-index: 1;
+    animation: shine 5s infinite ease-in;
+
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(128, 186, 232, 0) 99%, rgba(128, 186, 232, 0) 100%);
+}
+
+
+@keyframes shine {
+
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(30deg);
+    }
+
+    80% {
+        transform: translateX(-100%) translateY(-100%) rotate(30deg);
+    }
+
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(30deg);
+    }
+
+}
+
+.card__front{
+    -webkit-transform: rotateY(0);
+    -moz-transform: rotateY(0);
+}  
+
+.card__back {
+    padding: 18px 0;
+    -webkit-transform: rotateY(-180deg);
+    -moz-transform: rotateY(-180deg);
+    width: 100%;
+}
+
+.card__black-line {
+    margin-top: 5px;
+    height: 38px;
+    background-color: #303030;
+    width: 100%;
+}
+
+.card__logo {
+    height: 16px;
+}
+
+
+.card__square {
+    border-radius: 5px;
+    height: 30px;
+}
+
+
+
+
+.card__back-content {
+    padding: 15px 15px 0;
+    width: 100%;
+}
+.card__secret--last {
+    color: #303030;
+    text-align: right;
+    margin: 0;
+    font-size: 14px;
+    width: 100%;
+}
+
+.card__secret {
+    padding: 5px 12px;
+    background-color: #fff;
+    position:relative;
+}
+
+.card__secret:before{
+    content:'';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    height: calc(100% + 6px);
+    width: calc(100% - 42px);
+    border-radius: 4px;
+    background: repeating-linear-gradient(45deg, #ededed, #ededed 5px, #f9f9f9 5px, #f9f9f9 10px);
+}
+
+.card__back-logo {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
+
+.card__back-square {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+}
+
+.card:hover .card__front {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+
+}
+
+.card:hover .card__back {
+    -webkit-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+}
+
+.header-lateral{
+    display: none;
+}
+
+.section2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.creationCardForm{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+    :root {
+      --white: #afafaf;
+      --red: #e31b23;
+      --bodyColor: #292a2b;
+      --borderFormEls: hsl(0, 0%, 10%);
+      --bgFormEls: hsl(0, 0%, 14%);
+      --bgFormElsFocus: hsl(0, 7%, 20%);
+    }
+    
+    
+    a {
+      color: inherit;
+    }
+    
+    input,
+    select,
+    textarea,
+    button {
+      font-family: inherit;
+      font-size: 100%;
+    }
+    
+    button,
+    label {
+      cursor: pointer;
+    }
+    
+    select {
+      appearance: none;
+    }
+    
+    /* Remove native arrow on IE */
+    select::-ms-expand {
+      display: none;
+    }
+    select:-moz-focusring {
+      color: transparent !important;
+      text-shadow: 0 0 0 var(--white);
+    }
+    
+    textarea {
+      resize: none;
+    }
+    
+    ul {
+      list-style: none;
+      
+    }
+    .ulCreationCard{
+      background-color: #648ca6;
+      border-radius: 15px;
+      padding: 1rem;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+  /* FORM ELEMENTS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
+  .my-form h1 {
+    margin-bottom: 1.5rem;
+  }
+  
+  .my-form li,
+  .my-form .grid > *:not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
+  
+  .my-form select,
+  .my-form input,
+  .my-form textarea,
+  .my-form button {
+    width: 100%;
+    line-height: 1.5;
+    padding: 15px 10px;
+    border: 1px solid var(--borderFormEls);
+    color: var(--white);
+    transition: background-color 0.3s cubic-bezier(0.57, 0.21, 0.69, 1.25),
+      transform 0.3s cubic-bezier(0.57, 0.21, 0.69, 1.25);
+  }
+  
+  .my-form textarea {
+    height: 170px;
+  }
+  
+  .my-form ::placeholder {
+    color: inherit;
+    /*Fix opacity issue on Firefox*/
+    opacity: 1;
+  }
+  
+  
+  .my-form select:focus,
+  .my-form input:focus,
+  .my-form textarea:focus {
+    transform: scale(1.02);
+  }
+  
+  .my-form *:required,
+  .my-form select {
+    background-repeat: no-repeat;
+    background-position: center right 12px;
+    background-size: 15px 15px;
+  }
+  
+  .my-form *:required {
+    background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/asterisk.svg);  
+  }
+  
+  .my-form select {
+    background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/down.svg);
+  }
+  
+  .my-form *:disabled {
+    cursor: default;
+    filter: blur(2px);
+  }
+  
+  
+  /* FORM BTNS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
+  .my-form .required-msg {
+    display: none;
+    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/asterisk.svg)
+      no-repeat center left / 15px 15px;
+    padding-left: 20px;
+  }
+  
+  .my-form .btn-grid {
+    position: relative;
+    overflow: hidden;
+    transition: filter 0.2s;
+  }
+  
+  .my-form button {
+    font-weight: bold;
+  }
+  
+  .my-form button > * {
+    display: inline-block;
+    width: 100%;
+    transition: transform 0.4s ease-in-out;
+  }
+  
+  .my-form button .back {
+    position: absolute;
+    left: 48%;
+    top: 50%;
+    transform: translate(-110%, -50%);
+  }
+  
+  .my-form button:enabled:hover .back,
+  .my-form button:focus .back {
+    transform: translate(-50%, -50%);
+  }
+  
+  .my-form button:enabled:hover .front,
+  .my-form button:focus .front {
+    transform: translateX(110%);
+  }
+  
+  
+  /* CUSTOM CHECKBOX
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
+  .my-form input[type="checkbox"] {
+    position: absolute;
+    left: -9999px;
+  }
+  
+  .my-form input[type="checkbox"] + label {
+    position: relative;
+    display: inline-block;
+    padding-left: 2rem;
+    transition: 0.3s cubic-bezier(0.57, 0.21, 0.69, 1.25);
+  }
+  
+  .my-form input[type="checkbox"] + label::before,
+  .my-form input[type="checkbox"] + label::after {
+    content: '';
+    position: absolute;
+  }
+  
+  .my-form input[type="checkbox"] + label::before {
+    left: 0;
+    top: 6px;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--white);
+  }
+  
+  .my-form input[type="checkbox"]:checked + label::before {
+    background: var(--red);
+  }
+  
+  .my-form input[type="checkbox"]:checked + label::after {
+    left: 7px;
+    top: 7px;
+    width: 6px;
+    height: 14px;
+    border-bottom: 2px solid var(--white);
+    border-right: 2px solid var(--white);
+    transform: rotate(45deg);
+  }
+  
+  @media screen and (min-width: 600px) {
+    .my-form .grid {
+      display: grid;
+      grid-gap: 1.5rem;
+    }
+  
+    .my-form .grid-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+  
+    .my-form .grid-3 {
+      grid-template-columns: auto auto auto;
+      align-items: center;
+    }
+  
+    .my-form .grid > *:not(:last-child) {
+      margin-bottom: 0;
+    }
+  
+    .my-form .required-msg {
+      display: block;
+    }
+  }
+  
+  @media screen and (min-width: 541px) {
+    .my-form input[type="checkbox"] + label::before {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  
+    .my-form input[type="checkbox"]:checked + label::after {
+      top: 3px;
+    }
+  }
+  /* ------- CREATE CARD ------- */
+@media(min-width: 375px) {
+    .caja22{
+        font-size: 21px;
+    }
+    .card{
+        width: 320px;
+    }
+
+    .cuentas-container-card{
+        width: fit-content;
+    }
+}
+
+@media(min-width: 425px) {
+    .card{
+        width: 320px;
+    }
+
+    .cuentas-container-card{
+        width: fit-content;
+    }
+
+    .caja22{
+        font-size: 23px;
+    }
+    .loans-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .loans-data {
+        margin-right: 7px;
+        margin-left: 7px;
+    }
+
+}
+
+@media (min-width: 550px){
+    .accounts-content {
+        display: flex;
+    }
+    .accounts-content a {
+        padding: 7px;
+    }
+    .loans-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+    .loans-data {
+        margin-right: 15px;
+        margin-left: 15px;
+    }
+}
+
+@media (min-width: 768px){
+    .accounts-content{
+        display: flex;
+        justify-content: center;
+    }
+
+    .credit-card-title {
+        margin-top: 3rem;
+    }
+
+    .cards-content {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: unset;
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
+
+    .accounts-content a{
+        margin: 7px;
+        width: 50%;
+    }
+
+    .card {
+        margin: 0 10px;
+        margin: 10px;
+    }
+    .loans-content {
+        display: flex;
+        justify-content: center;
+    }
+    .loans-data {
+        margin-right: 10px;
+        margin-left: 15px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .cuentas-container-card {
+        flex-direction: unset;
+        flex-wrap: wrap;
+        height: fit-content;
+        width: fit-content;
+        border-radius: 1rem;
+    }
+
+    .caja22{
+        font-size: 23px;
+    }
+
+    .main-cards{
+        display: flex;
+    }
+
+    .credit-card-section{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .credits-cards-container{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    .account-container {
+        margin-top: 5px;
+    }
+
+    .btn-create-card-container{
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn-create-card-container {
+        width: 18%;
+      
+    }
+
+    .account-container {
+        width: 100%;
+    }
+
+    .accounts-content {
+        width: 100%;
+    }
+
+    .accounts-content{
+        display: flex;
+        justify-content: center;
+    }
+
+    .accounts-content a {
+        width: 33%;
+    }
+    .loans-content {
+        display: flex;
+        justify-content: center;
+        width: 68%;
+    }
+    .loans-data {
+        margin-right: 15px;
+        margin-left: 15px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .cuentas-container-card {
+        flex-direction: unset;
+        flex-wrap: wrap;
+        height: fit-content;
+        width: fit-content;
+        border-radius: 1rem;
+    }
+    .caja22 {
+        font-size: 23px;
+    }
+    .credits-cards-container{
+        flex-direction: column;
+    }
+
+    .title-account {
+
+        margin-top: 57px;
+    }
+    .accounts-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .accounts-content a {
+        width: 75%;
+        display: flex;
+        justify-content: center;
+    }
+    .cont-account-cards{
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+    }
+    .contenedor-cont-account-cards{
+        width: 100%;
+        display: flex;
+    }
+    .account-data {
+        width: 100%;
+    }
+    .account-container {
+        align-items: center;
+        width: 30%;
+        border-right: 1px solid #648ca6;
+    }
+    .loans-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 53%;
+    }
+    .loans-data {
+        margin-right: 15px;
+        margin-left: 15px;
+        margin-top: 27px;
+    }
+
+
+}
+
+@media (min-width: 1440px) {
+    .cuentas-container-card {
+        flex-direction: unset;
+        flex-wrap: wrap;
+        height: fit-content;
+        width: fit-content;
+        border-radius: 1rem;
+    }
+    .caja22 {
+        font-size: 23.1px;
+    }
+
+    li{
+        list-style: none;
+    }
+
+    .header-lateral{
+        display: flex;
+        justify-content: space-between;
+        height: 101vh;
+        background-color:#648ca6;
+        flex-direction: column;
+        list-style: none;
+        padding: 1rem;
+    }
+    .menu-lateral {
+        display: flex;
+        flex-direction: column;
+        margin-top: 2rem;
+    }
+
+    .main-cards{
+        display: flex !important;
+        flex-direction: unset;
+    }
+    .section2{
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: unset;
+        height: 100vh;
+        display: flex;
+        width: 100%;
+    }
+
+    .header-lateral a {
+        color: white;
+        padding: 1rem;
+        padding-top: 1rem;
+    }
+
+
+    .title-account {
+        margin-top: 4rem;
+    }
+
+    .credits-cards-container{
+        flex-direction: column;
+    }
+  
+
+    .account-data{
+        width: 20rem;
+    }
+
+    .accounts-content {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }  
+    
+    .account-container {
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .accounts-content a {
+        width: 100%
+    }
+
+}
+
+@media (min-width: 1920px) {
+
+    .caja22 {
+        font-size: 23px;
+    }
+
+    
+}
