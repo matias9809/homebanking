@@ -1,10 +1,10 @@
 package com.mindhub.homebanking.controller;
 
+import com.mindhub.homebanking.DTO.CardDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.mindhub.homebanking.utilities.Utils.NumberCards;
@@ -27,6 +26,12 @@ public class ControllerCard {
     private CardRepository cardRepository;
     @Autowired
     private ClientRepository clientRepository;
+
+    @RequestMapping("/client/current/card")
+    public List<CardDTO> listadetarjetas(Authentication authentication){
+        Client client=clientRepository.findByEmail(authentication.getName());
+        return client.getCards().stream().map(CardDTO::new).collect(Collectors.toList());
+    }
 
     @RequestMapping(path = "/clients/current/cards", method = RequestMethod.POST)
     public ResponseEntity<Object> newCard(

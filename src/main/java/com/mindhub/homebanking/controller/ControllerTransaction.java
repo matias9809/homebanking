@@ -15,10 +15,7 @@ import org.springframework.boot.autoconfigure.integration.IntegrationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -43,17 +40,19 @@ public class ControllerTransaction {
         return transactionRepository.findAll().stream().map(TransactionDTO::new).collect(toList());
     }
     @Transactional
-    @RequestMapping("/clients/current/transaction")
+    @RequestMapping(path = "/transactions", method = RequestMethod.POST)
     public ResponseEntity<Object> getTransaction(Authentication authentication,
-         @RequestParam Double amount, @RequestParam String numberOrigin,
+         @RequestParam(required = false) Double amount, @RequestParam String numberOrigin,
          @RequestParam String numberRecep, @RequestParam String description){
         Client client=clientRepository.findByEmail(authentication.getName());
 
         Account accountOrigins=accountRepository.findByNumber(numberOrigin);
         Account accountrecepter=accountRepository.findByNumber(numberRecep);
 
-        if (amount.isNaN()){
+        if (amount.isNaN()||amount==null){
             return new ResponseEntity<>("Missing amount", HttpStatus.BAD_REQUEST);
+        } else if (amount<0) {
+            return new ResponseEntity<>("cannot transfer negative numbers", HttpStatus.BAD_REQUEST);
         } else if (numberOrigin.isEmpty()) {
             return new ResponseEntity<>("Missing number origin", HttpStatus.BAD_REQUEST);
         } else if (numberRecep.isEmpty()) {
@@ -78,14 +77,15 @@ public class ControllerTransaction {
         }
         Transaction transactionOrigin=new Transaction(TransactionType.DEBIT,-amount,description+" "+numberOrigin,LocalDateTime.now());
         Transaction transactionRecepter=new Transaction(TransactionType.CREDIT,amount,description+" "+numberOrigin,LocalDateTime.now());
-        accountOrigins.setBalance(accountOrigins.getBalance()-amount);
-        accountrecepter.setBalance(accountrecepter.getBalance()+amount);
         accountOrigins.addTransaction(transactionOrigin);
         accountrecepter.addTransaction(transactionRecepter);
-        accountRepository.save(accountOrigins);
-        accountRepository.save(accountrecepter);
+        accountOrigins.setBalance(accountOrigins.getBalance()-amount);
+        accountrecepter.setBalance(accountrecepter.getBalance()+amount);
         transactionRepository.save(transactionOrigin);
         transactionRepository.save(transactionRecepter);
+        accountRepository.save(accountOrigins);
+        accountRepository.save(accountrecepter);
+
         return new ResponseEntity<>("transaction completed correctly",HttpStatus.CREATED);
     }
 }

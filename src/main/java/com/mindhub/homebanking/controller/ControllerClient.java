@@ -38,7 +38,7 @@ public class ControllerClient {
         return clientrepository.findById(id).map(client ->new ClientDTO(client));
     }
     @RequestMapping("/clients/current")
-    public ClientDTO getCientAuthentic(Authentication authentication) {
+    public ClientDTO getClientAuthentic(Authentication authentication) {
         return new ClientDTO(clientrepository.findByEmail(authentication.getName()));
     }
     @RequestMapping(path = "/clients", method = RequestMethod.POST)
