@@ -3,6 +3,7 @@ package com.mindhub.homebanking.controller;
 import com.mindhub.homebanking.DTO.ClientDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.models.TypeAccount;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,26 +30,24 @@ public class ControllerClient {
     @Autowired
     private AccountRepository accountRepository;
 
-    @RequestMapping("/clients")
+    @GetMapping("/clients")
     public List<ClientDTO> getAll() {
         return clientrepository.findAll().stream().map(ClientDTO::new).collect(toList());
     }
-    @RequestMapping("clients/{id}")
+    @GetMapping("clients/{id}")
     public Optional<ClientDTO> getClient(@PathVariable Long id){
         return clientrepository.findById(id).map(client ->new ClientDTO(client));
     }
-    @RequestMapping("/clients/current")
+    @GetMapping("/clients/current")
     public ClientDTO getClientAuthentic(Authentication authentication) {
         return new ClientDTO(clientrepository.findByEmail(authentication.getName()));
     }
-    @RequestMapping(path = "/clients", method = RequestMethod.POST)
+    @PostMapping("/clients")
     public ResponseEntity<Object> register(
 
             @RequestParam String firstName, @RequestParam String lastName,
 
-            @RequestParam String email, @RequestParam String password) {
-
-
+            @RequestParam String email, @RequestParam String password, @RequestParam TypeAccount typeAccount) {
 
         if (firstName.isEmpty()) {
             return new ResponseEntity<>("Missing firstname", HttpStatus.BAD_REQUEST);
@@ -61,17 +60,15 @@ public class ControllerClient {
             return new ResponseEntity<>("Missing password", HttpStatus.BAD_REQUEST);
         }
 
-
         if (clientrepository.findByEmail(email) !=  null) {
 
             return new ResponseEntity<>("email already in use", HttpStatus.BAD_REQUEST);
 
         }
 
-
         Client clientNewUser=new Client(firstName, lastName, email, passwordEncoder.encode(password));
 
-        Account accountNewUser=new Account(AccountNumber(accountRepository), LocalDateTime.now(),0.00);
+        Account accountNewUser=new Account(AccountNumber(accountRepository), LocalDateTime.now(),0.00,typeAccount);
         clientNewUser.addAccounts(accountNewUser);
         clientrepository.save(clientNewUser);
         accountRepository.save(accountNewUser);

@@ -1,28 +1,20 @@
 package com.mindhub.homebanking.DTO;
 
-import com.mindhub.homebanking.models.Loan;
-
-
 import java.util.List;
 
-public class LoanDTO {
-    private Long id;
+public class LoanCreateDTO {
     private String name;
     private Integer maxAmount;
 
     private List<Integer> payment;
     private Double fees;
-
-    public LoanDTO(Loan loan) {
-        this.id = loan.getId();
-        this.name = loan.getName();
-        this.maxAmount = loan.getMaxAmount();
-        this.payment = loan.getPayment();
-        this.fees= loan.getFees();
+    public LoanCreateDTO(){
     }
-
-    public Long getId() {
-        return id;
+    public LoanCreateDTO(Integer maxamount, List<Integer> payment, String name,Double fees) {
+        this.name = name;
+        this.maxAmount = maxamount;
+        this.payment = payment;
+        this.fees= fees;
     }
 
     public String getName() {

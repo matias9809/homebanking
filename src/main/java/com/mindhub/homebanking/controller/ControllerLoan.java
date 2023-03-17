@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.controller;
 
 import com.mindhub.homebanking.DTO.LoanApplicationDTO;
+import com.mindhub.homebanking.DTO.LoanCreateDTO;
 import com.mindhub.homebanking.DTO.LoanDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
@@ -21,7 +22,7 @@ import static java.util.stream.Collectors.toList;
 @RequestMapping("/api")
 public class ControllerLoan {
     @Autowired
-    private LoansRepository loansRepository;
+    private LoanRepository loansRepository;
 
     @Autowired
     private ClientRepository clientRepository;
@@ -35,12 +36,12 @@ public class ControllerLoan {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    @RequestMapping("/Loans")
+    @GetMapping("/Loans")
     public List<LoanDTO> getAll() {
         return loansRepository.findAll().stream().map(LoanDTO::new).collect(toList());
     }
-   @Transactional
-    @RequestMapping(value = "/loans", method = RequestMethod.POST)
+    @Transactional
+    @PostMapping("/loans")
     public ResponseEntity<Object> getLoans(Authentication authentication,
              @RequestBody LoanApplicationDTO loanApplicationDTO){
             Client client=clientRepository.findByEmail(authentication.getName());
@@ -74,10 +75,10 @@ public class ControllerLoan {
             if (client.getLoan().contains(loansRepository.findById(loanApplicationDTO.getId_prestamo()).orElse(null))){
                 return new ResponseEntity<>("you already have this loan", HttpStatus.BAD_REQUEST);
             }
-            ClientLoan clientLoan=new ClientLoan(loanApplicationDTO.getPayment(), loanApplicationDTO.getAmount()*1.2);
+            ClientLoan clientLoan=new ClientLoan(loanApplicationDTO.getPayment(), loanApplicationDTO.getAmount()*loan.getFees());
             client.addClientLoan(clientLoan);
             loan.addClientLoans(clientLoan);
-            Transaction transaction=new Transaction(TransactionType.CREDIT, loanApplicationDTO.getAmount(),loan.getName()+" loan", LocalDateTime.now());
+            Transaction transaction=new Transaction(TransactionType.CREDIT, loanApplicationDTO.getAmount(),loan.getName()+" loan", LocalDateTime.now(),accountreciving.getBalance()+loanApplicationDTO.getAmount());
             accountreciving.addTransaction(transaction);
             accountreciving.setBalance(accountreciving.getBalance()+loanApplicationDTO.getAmount());
             clientLoansRepository.save(clientLoan);
@@ -86,5 +87,27 @@ public class ControllerLoan {
             transactionRepository.save(transaction);
             accountRepository.save(accountreciving);
             return new ResponseEntity<>("loan request correctly",HttpStatus.CREATED);
+    }
+    @PostMapping("/create/loan")
+    public ResponseEntity<Object> createloan(Authentication authentication, @RequestBody LoanCreateDTO loanCreateDTO){
+        Client Admin=clientRepository.findByEmail(authentication.getName());
+        if (loanCreateDTO.getFees().isNaN()||loanCreateDTO.getFees()==null){
+            return new ResponseEntity<>("Missing fees", HttpStatus.BAD_REQUEST);
+        }
+        if (loanCreateDTO.getMaxAmount()<1){
+            return new ResponseEntity<>("Missing amount", HttpStatus.BAD_REQUEST);
+        }
+        if (loanCreateDTO.getPayment()==null){
+            return new ResponseEntity<>("Missing payment", HttpStatus.BAD_REQUEST);
+        }
+        if (loanCreateDTO.getName().isEmpty()){
+            return new ResponseEntity<>("Missing name", HttpStatus.BAD_REQUEST);
+        }
+        if(loansRepository.existsByName(loanCreateDTO.getName())){
+            return new ResponseEntity<>("that loan already exists", HttpStatus.BAD_REQUEST);
+        }
+        Loan loan=new Loan(loanCreateDTO.getName(),loanCreateDTO.getMaxAmount(),loanCreateDTO.getPayment(),loanCreateDTO.getFees());
+        loansRepository.save(loan);
+        return new ResponseEntity<>("loan created correctly",HttpStatus.CREATED);
     }
 }

@@ -18,6 +18,7 @@ public class Card {
     private short cvv;
     private LocalDate thruDate;
     private LocalDate fromDate;
+    private State state;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
@@ -32,6 +33,7 @@ public class Card {
         this.fromDate=fromDate;
         this.thruDate=thruDate;
         this.number=number;
+        this.state=State.ACTIVE;
     }
 
     public String getCardholder() {
@@ -100,5 +102,13 @@ public class Card {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 }

@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.DTO;
 
 import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.models.State;
 
 import java.util.Set;
 import static java.util.stream.Collectors.toSet;

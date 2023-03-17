@@ -16,17 +16,21 @@ public class Account {
     private String number;
     private LocalDateTime creationDate;
     private Double balance;
+    private TypeAccount typeAccount;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
+    private State state;
     @OneToMany(mappedBy="account", cascade = CascadeType.ALL, fetch = FetchType.EAGER )
     Set<Transaction> transactions = new HashSet<>();
     public Account(){
     }
-    public Account(String number,LocalDateTime Date,Double balance){
+    public Account(String number,LocalDateTime Date,Double balance,TypeAccount typeAccount){
         this.number=number;
         this.creationDate=Date;
         this.balance=balance;
+        this.state=State.ACTIVE;
+        this.typeAccount=typeAccount;
     }
     public String getNumber(){
         return number;
@@ -58,6 +62,18 @@ public class Account {
     }
     public Set<Transaction> getTransactions() {
         return transactions;
+    }
+
+    public TypeAccount getTypeAccount() {
+        return typeAccount;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     public void addTransaction(Transaction transaction) {
