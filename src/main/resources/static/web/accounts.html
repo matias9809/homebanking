@@ -36,7 +36,7 @@
 
                         <div class="d-flex flex-column flex-lg-row">
                             <li class="nav-item me-2">
-                                <a class="nav-link active text-white" aria-current="page"
+                                <a class="nav-link text-white a_active" aria-current="page"
                                     href="#">Account</a>
                             </li>
                             <li class="nav-item me-2">
@@ -85,14 +85,25 @@
                                                 {{acc.creationDate.slice(0,4)}}/{{acc.creationDate.slice(5,7)}}/{{acc.creationDate.slice(8,10)}}
                                             </p>
                                         </div>
+                                        <div class="balance-account text-center">
+                                            <p>View Transaction
+                                            </p>
+                                        </div>
                                     </div>
                                 </a>
                             </template>
                         </div>
-                            <div class="btn-create-card-container">
-                                <a class="btn-create-card" @click="createAccount">
-                                    Create Account
-                                </a>
+                            <div class="d-flex">
+                                <div class="btn-create-card-container w-100 container-fluid">
+                                    <a class="btn-create-card" @click="createAccount">
+                                        Create Account
+                                    </a>
+                                </div>
+                                <div class="btn-create-card-container ms-2 container-fluid w-100">
+                                    <a class="btn-create-card" @click="createAccount">
+                                        Delete Account
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

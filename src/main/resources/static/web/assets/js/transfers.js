@@ -18,7 +18,6 @@ createApp( {
     },
     created(){
         this.load_data();
-      
             axios.get(`/api/Loans`)
             .then(response=>{
                 this.loans=response.data

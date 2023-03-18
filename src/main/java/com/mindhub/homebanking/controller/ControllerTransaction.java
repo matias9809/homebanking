@@ -1,12 +1,13 @@
 package com.mindhub.homebanking.controller;
 
 import com.mindhub.homebanking.DTO.CardServicesDTO;
-import com.mindhub.homebanking.DTO.ClientDTO;
 import com.mindhub.homebanking.DTO.TransactionDTO;
+import com.mindhub.homebanking.Services.ServicesAccount;
+import com.mindhub.homebanking.Services.ServicesCard;
+import com.mindhub.homebanking.Services.ServicesClient;
+import com.mindhub.homebanking.Services.ServicesTransactions;
 import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.integration.IntegrationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -16,36 +17,39 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
+
 @RestController
 @RequestMapping("/api")
 public class ControllerTransaction {
     @Autowired
-    private TransactionRepository transactionRepository;
+    private ServicesTransactions servicesTransactions;
 
     @Autowired
-    private AccountRepository accountRepository;
+    private ServicesAccount servicesAccount;
 
     @Autowired
-    private ClientRepository clientRepository;
+    private ServicesClient servicesClient;
     @Autowired
-    private CardRepository cardRepository;
+    private ServicesCard servicesCard;
 
     @GetMapping("/transaction")
     public List<TransactionDTO> getAll() {
-        return transactionRepository.findAll().stream().map(TransactionDTO::new).collect(toList());
+        return servicesTransactions.findAll().stream().map(TransactionDTO::new).collect(toList());
     }
     @Transactional
     @PostMapping("/transactions")
     public ResponseEntity<Object> getTransaction(Authentication authentication,
          @RequestParam(required = false) Double amount, @RequestParam String numberOrigin,
          @RequestParam String numberRecep, @RequestParam String description){
-        Client client=clientRepository.findByEmail(authentication.getName());
+        Client client= servicesClient.findByEmail(authentication.getName());
 
-        Account accountOrigins=accountRepository.findByNumber(numberOrigin);
-        Account accountrecepter=accountRepository.findByNumber(numberRecep);
+        Account accountOrigins= servicesAccount.findByNumber(numberOrigin);
+        Account accountrecepter= servicesAccount.findByNumber(numberRecep);
 
         if (amount.isNaN()||amount==null){
             return new ResponseEntity<>("Missing amount", HttpStatus.BAD_REQUEST);
@@ -61,13 +65,13 @@ public class ControllerTransaction {
         if (numberOrigin.equals(numberRecep)){
             return new ResponseEntity<>("cannot transfer to the same account", HttpStatus.BAD_REQUEST);
         }
-        if (accountRepository.findByNumber(numberOrigin)==null){
+        if (servicesAccount.findByNumber(numberOrigin)==null){
             return new ResponseEntity<>("that origin account does not exist", HttpStatus.BAD_REQUEST);
         }
         if (client.getAccount().stream().noneMatch(account -> account.getNumber().equals(numberOrigin))){
             return new ResponseEntity<>("this account does not belong to you", HttpStatus.BAD_REQUEST);
         }
-        if (accountRepository.findByNumber(numberRecep)==null){
+        if (servicesAccount.findByNumber(numberRecep)==null){
             return new ResponseEntity<>("that receiving account does not exist", HttpStatus.BAD_REQUEST);
         }
         if (accountOrigins.getBalance()<amount){
@@ -79,18 +83,20 @@ public class ControllerTransaction {
         accountrecepter.addTransaction(transactionRecepter);
         accountOrigins.setBalance(accountOrigins.getBalance()-amount);
         accountrecepter.setBalance(accountrecepter.getBalance()+amount);
-        transactionRepository.save(transactionOrigin);
-        transactionRepository.save(transactionRecepter);
-        accountRepository.save(accountOrigins);
-        accountRepository.save(accountrecepter);
+        servicesTransactions.save(transactionOrigin);
+        servicesTransactions.save(transactionRecepter);
+        servicesAccount.save(accountOrigins);
+        servicesAccount.save(accountrecepter);
 
         return new ResponseEntity<>("transaction completed correctly",HttpStatus.CREATED);
     }
     @Transactional
+    @CrossOrigin
     @PostMapping("/client/transaction/debit")
     public ResponseEntity<Object> transactionDebit(@RequestBody CardServicesDTO cardServicesDTO){
-        Card card=cardRepository.findByNumber(cardServicesDTO.getNumber());
-        Account account=(Account) card.getClient().getAccount().stream().filter(account1 -> account1.getBalance()>=cardServicesDTO.getAmount());
+        Card card= servicesCard.findByNumber(cardServicesDTO.getNumber());
+        Account account= card.getClient().getAccount().stream().filter(account1 -> account1.getBalance()>=cardServicesDTO.getAmount()).findFirst().get();
+
         if (cardServicesDTO.getNumber().isEmpty()){
             return new ResponseEntity<>("I did not enter the card number", HttpStatus.BAD_REQUEST);
         }
@@ -118,14 +124,14 @@ public class ControllerTransaction {
         if (card.getCvv()!= cardServicesDTO.getCvv()){
             return new ResponseEntity<>("the data entered is incorrect", HttpStatus.BAD_REQUEST);
         }
-        if (card.getThruDate().isAfter(LocalDate.now())){
+        if (!card.getThruDate().isAfter(LocalDate.now())){
             return new ResponseEntity<>("your card is expired", HttpStatus.BAD_REQUEST);
         }
         Transaction transaction=new Transaction(TransactionType.DEBIT, cardServicesDTO.getAmount(), cardServicesDTO.getDescription(), LocalDateTime.now(),account.getBalance()-cardServicesDTO.getAmount());
         account.addTransaction(transaction);
         account.setBalance(account.getBalance()-cardServicesDTO.getAmount());
-        accountRepository.save(account);
-        transactionRepository.save(transaction);
+        servicesAccount.save(account);
+        servicesTransactions.save(transaction);
         return new ResponseEntity<>("transaction completed correctly",HttpStatus.CREATED);
     }
 }

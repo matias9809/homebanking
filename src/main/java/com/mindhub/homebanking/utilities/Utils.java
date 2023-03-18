@@ -1,5 +1,7 @@
 package com.mindhub.homebanking.utilities;
 
+import com.mindhub.homebanking.Services.ServicesAccount;
+import com.mindhub.homebanking.Services.ServicesCard;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.CardRepository;
 
@@ -9,12 +11,12 @@ public class Utils {
         String number ="VIN-"+number1;
         return number;
     }
-    public static String AccountNumber(AccountRepository accountRepository){
+    public static String AccountNumber(ServicesAccount servicesAccount){
         String Number;
         boolean verifyNumber;
         do {
             Number=GenereteNumberRandomsAccount();
-            verifyNumber=accountRepository.existsByNumber(Number);
+            verifyNumber=servicesAccount.existsByNumber(Number);
         }while(verifyNumber);
         return Number;
     }
@@ -27,12 +29,12 @@ public class Utils {
         String number =number1_1+""+number1+"-"+number2+"-"+number3+"-"+number4;
         return number;
     }
-    public static String NumberCards(CardRepository cardRepo){
+    public static String NumberCards(ServicesCard servicesCard){
         String Number;
         boolean verifyNumber;
         do {
             Number=GenereteNumberCardsRandoms();
-            verifyNumber=cardRepo.existsByNumber(Number);
+            verifyNumber=servicesCard.existsByNumber(Number);
         }while(verifyNumber);
         return Number;
     }

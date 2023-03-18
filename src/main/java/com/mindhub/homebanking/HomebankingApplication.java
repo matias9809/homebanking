@@ -1,5 +1,6 @@
 package com.mindhub.homebanking;
 
+import com.mindhub.homebanking.Services.ServicesCard;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class HomebankingApplication {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientrepository, AccountRepository repoaccount, TransactionRepository transactionRepository, ClientLoansRepository repoclientLoans, LoanRepository repoLoans, CardRepository cardRepository) {
+	public CommandLineRunner initData(ClientRepository clientrepository, AccountRepository repoaccount, TransactionRepository transactionRepository, ClientLoansRepository repoclientLoans, LoanRepository repoLoans, ServicesCard servicesCard) {
 		return (args) -> {
 			Client ADMI=new Client("admin","admin","ADMI@HOTMAIL.COM",passwordEnconder.encode("admi123"));
 			Client client=new Client("Morel", "Melba","melba@mindhub.com",passwordEnconder.encode("melba123"));
@@ -56,12 +57,12 @@ public class HomebankingApplication {
 			ClientLoan clientLoan3=new ClientLoan(24,100000.0);
 			ClientLoan clientLoan4=new ClientLoan(36,200000.0);
 
-			Card card1=new Card(client.getLastname()+" "+client.getFirstname(), TypeCard.DEBIT, ColorCard.GOLD,NumberCards(cardRepository)
-					,LocalDate.now(), LocalDate.now().plusYears(5));
-			Card card2=new Card(client.getLastname()+" "+client.getFirstname(), TypeCard.CREDIT, ColorCard.TITANIUM,NumberCards(cardRepository)
-					,LocalDate.now(), LocalDate.now().plusYears(5));
-			Card card3=new Card(client.getLastname()+" "+client.getFirstname(), TypeCard.CREDIT, ColorCard.SILVER,NumberCards(cardRepository)
-					,LocalDate.now(), LocalDate.now().plusYears(5));
+			Card card1=new Card(client.getLastname()+" "+client.getFirstname(), TypeCard.DEBIT, ColorCard.GOLD,NumberCards(servicesCard)
+					,LocalDate.now().plusYears(5),LocalDate.now() );
+			Card card2=new Card(client.getLastname()+" "+client.getFirstname(), TypeCard.CREDIT, ColorCard.TITANIUM,NumberCards(servicesCard)
+					,LocalDate.now().plusYears(5),LocalDate.now());
+			Card card3=new Card(client.getLastname()+" "+client.getFirstname(), TypeCard.CREDIT, ColorCard.SILVER,NumberCards(servicesCard)
+					,LocalDate.now().plusYears(5),LocalDate.now());
 
 
 
@@ -118,9 +119,9 @@ public class HomebankingApplication {
 			repoclientLoans.save(clientLoan3);
 			repoclientLoans.save(clientLoan4);
 
-			cardRepository.save(card1);
-			cardRepository.save(card2);
-			cardRepository.save(card3);
+			servicesCard.save(card1);
+			servicesCard.save(card2);
+			servicesCard.save(card3);
 		};
 	}
 

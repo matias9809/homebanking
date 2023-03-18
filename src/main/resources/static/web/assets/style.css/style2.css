@@ -385,6 +385,7 @@ a{
     .loans-content {
         display: flex;
         flex-direction: column;
+        align-items: center;
         justify-content: center;
         width: 53%;
     }
@@ -392,6 +393,7 @@ a{
         margin-right: 15px;
         margin-left: 15px;
         margin-top: 27px;
+        width: 73%;
     }
 
 

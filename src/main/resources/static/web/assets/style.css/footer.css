@@ -29,11 +29,19 @@ footer a{
     
 }
 
-.a:hover{
-    color: blue;
+a:hover{
+    color: blue !important;
 }
 .title_footer{
     display: none;
+}
+
+.a_active:active{
+    border-bottom:2px solid blue !important;
+}
+.a_active{
+    border-bottom:2px solid blue !important;
+    color: blue !important;
 }
 @media (min-width:767px) {
     footer{

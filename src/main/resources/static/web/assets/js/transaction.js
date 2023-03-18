@@ -12,8 +12,6 @@ createApp( {
             accountFilter:[],
             accounts:[],
             transactions:[]
-            
-
         }
     },
     created(){
