@@ -31,7 +31,7 @@ public class Card {
         this.type=type;
         this.color=color;
         this.fromDate=fromDate;
-        this.thruDate=thruDate;
+        this.thruDate=thruDate.plusYears(5);
         this.number=number;
         this.state=State.ACTIVE;
     }

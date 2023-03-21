@@ -74,8 +74,11 @@
                             <template v-for="acc in account">
                                 <a :href="'./account.html?id='+acc.id">
                                     <div class="account-data">
-                                        <div class="number-account">
+                                        <div class="number-account mb-2">
                                             <p>Account number: {{acc.number}}</p>
+                                        </div>
+                                        <div class="number-account">
+                                            <p>Account type: {{acc.typeAccount}}</p>
                                         </div>
                                         <div class="balance-account">
                                             <p>Total balance: ${{acc.balance.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</p>
@@ -94,13 +97,13 @@
                             </template>
                         </div>
                             <div class="d-flex">
-                                <div class="btn-create-card-container w-100 container-fluid">
-                                    <a class="btn-create-card" @click="createAccount">
+                                <div v-if="account.length<3" class="btn-create-card-container w-100 container-fluid">
+                                    <a class="btn-create-card" data-bs-toggle="modal" data-bs-target="#createAccount">
                                         Create Account
                                     </a>
                                 </div>
                                 <div class="btn-create-card-container ms-2 container-fluid w-100">
-                                    <a class="btn-create-card" @click="createAccount">
+                                    <a class="btn-create-card bg-danger" data-bs-toggle="modal" data-bs-target="#DeleteAccount">
                                         Delete Account
                                     </a>
                                 </div>
@@ -120,11 +123,15 @@
                                             </div>
                                             <div class="balance-account">
                                                 <p>
-                                                    Requested amount: ${{loan.amount}}</p>
+                                                    Requested amount: {{loan.amount.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</p>
                                             </div>
                                             <div class="balance-account">
                                                 <p>
-                                                    Amount of fees: {{loan.payments}}</p>
+                                                    cant of payment: {{loan.payments}}</p>
+                                            </div>
+                                            <div class="balance-account">
+                                                <p>
+                                                    amount of payment: {{(loan.amount/loan.payments).toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</p>
                                             </div>
                                         </div>
                                 </template>
@@ -140,7 +147,58 @@
                     </div>
                 </div>
             </div>
-
+            <div class="body modal fade" id="DeleteAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Stark Banking <img class="logo" src="./assets/img/pngtree-vector-bank-icon-png-image_755745.jpg" alt="logo"></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="d-flex flex-column ">
+                                <h2 class="mb-2 col-5 text-dark w-100 text-center">Delete Account</h2>
+                                <li class="text-dark mt-2">
+                                    Account Delete:
+                                    <select v-model="accountDelete" name="type">
+                                      <option value="">select account</option>
+                                      <option v-for="a of account" :value="a.number">{{a.number}}</option>   
+                                    </select>
+                                  </li>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" @click="deleteAccount">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="body modal fade" id="createAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Stark Banking <img class="logo" src="./assets/img/pngtree-vector-bank-icon-png-image_755745.jpg" alt="logo"></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="d-flex flex-column ">
+                                <h2 class="mb-2 col-5 text-dark w-100 text-center">Delete Account</h2>
+                                <li class="text-dark mt-2">
+                                    Account Delete:
+                                    <select v-model="typeAccount" name="type">
+                                      <option value="CHECKING">CHECKING</option>
+                                      <option value="SAVINGS">SAVINGS</option>   
+                                    </select>
+                                  </li>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" @click="createAccount">create</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <footer>
                 <div class="contact">
                     <a href="tel:525655512">contact</a>

@@ -12,7 +12,7 @@ createApp( {
             amount:"",
             description:"",
             id:undefined,
-            amount:"",
+            balances:"",
             payment:"select payment",
         }
     },
@@ -37,6 +37,9 @@ createApp( {
             })
             .catch(err=>console.log(err))
         },
+        balance(account){
+            this.balance=account
+        },
 
         logout(){
             axios.post('/api/logout')
@@ -49,6 +52,7 @@ createApp( {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             }).then(()=>{
+                    alert("acepted")
                     window.location.href = '/web/transfers.html';
                 })
             .catch(err=>alert(err))
@@ -59,7 +63,8 @@ createApp( {
                     'Content-Type': 'application/json'
                 }
             }).then(()=>{
-                    window.location.href = '/web/transfers.html';
+                    alert("acepted")
+                    window.location.href = '/web/accounts.html';
                 })
             .catch(err=>alert(err))
         }

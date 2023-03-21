@@ -85,13 +85,14 @@
                                 <option v-for="payments of loan.payment">{{payments}}</option>
                             </select>
                         </li>
-                        <li>
-                            <label for="amount"> amount: 
+                        <li v-for="loan of loans">
+                            <p v-if="loan.id==id">max amount: {{loan.maxAmount.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</p>
+                            <label for="amount" v-if="loan.id==id" > amount: 
                             <input v-model="amount" placeholder="amount"></input></label>
-                            <p v-show='amount!=0&&payment!=""'>{{payment}} x ${{(amount*1.2) / payment}}</p>
+                            <p v-show='amount!=0&&payment!=""' v-if="loan.id==id">{{payment}} x ${{((amount*loan.fees) / payment).toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</p>
                         </li>   
                         <li>
-                        <input type="checkbox" id="terms">
+                        <input type="checkbox" id="terms" required>
                         <label for="terms">I have read and agreed with <a href="">the terms and conditions.</a></label>
                         </li>  
                         <li>
@@ -103,12 +104,6 @@
                                 </span>
                                 <span  class="front">SUBMIT</span>
                             </button>
-                            <button class="btn-grid" type="reset" >
-                                <span class="back">
-                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/eraser-icon.svg" alt="">
-                                </span>
-                                <span class="front">RESET</span>
-                            </button> 
                             </div>
                         </li>    
                         </ul>

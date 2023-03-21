@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="./web/assets/style.css/style.css">
+    <link rel="stylesheet" href="./web/assets/style.css/footer.css">
+    <link rel="stylesheet" href="./web/assets/style.css/style2.css">
+    <link rel="stylesheet" href="./web/assets/style.css/index.css">
+    <link rel="stylesheet" href="./web/assets/style.css/style2cards.css">
+    <link rel="shortcut icon" href="./web/assets/img/pngtree-vector-bank-icon-png-image_755745.jpg" type="image/x-icon">
+    <title>Stark Banking/createloan</title>
+</head>
+<body class="cards-pag text-white w-100" >
+    <div id="app">
+        <header class="d-flex flex-wrap justify-content-start">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary w-100">
+                <div class="container-fluid">
+                <button class="navbar-toggler me-2 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                    <a class="navbar-brand text-white" href="#">Stark Bank</a>
+                
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mt-2 mb-2 mt-md-0 mb-lg-0 ">
+                            <li class="nav-item mt-4 mt-md-0 me-2s">
+                                <a href="./index.html" class="btn btn-outline-primary text-white btn-logout"
+                                    @click="logout()">Log out</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main class=" d-flex flex-column main_index">
+            <div class="creationCardForm mt-2" @submit.prevent>
+                <form class="my-form" >
+                    <div class="container">
+                        <ul class="ulCreationCard">
+                            <h1 class="text-white text-center">Create Loan</h1>
+                            <li>
+                                <label for="name" > name loan: 
+                                    <input v-model="name" placeholder="name loan"></input></label>
+                            </li>
+                            <li>
+                                <label for="amount" >max amount: 
+                                <input v-model="maxAmount" placeholder="max amount"></input></label>
+                            </li>
+                            <li>
+                                <label for="payment" >payment: 
+                                <input v-model="payment" placeholder="payment"></input></label>
+                            </li>
+                            <li>
+                                <label for="fees" >fees: 
+                                <input v-model="fees" placeholder="fees"></input></label>
+                            </li>       
+                            <li>
+                            <input type="checkbox" id="terms" required>
+                            <label for="terms">I have read and agreed with <a href="">the terms and conditions.</a></label>
+                            </li>  
+                            <li>
+                                <div class="grid grid-3">
+                                <div class="required-msg">REQUIRED FIELDS</div>
+                                <button v-on:click="createLoan" class="btn-grid" type="submit" >
+                                    <span class="back">
+                                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/email-icon.svg" alt="">
+                                    </span>
+                                    <span  class="front">SUBMIT</span>
+                                </button>
+                                <button class="btn-grid" type="button" @Click="manager" >
+                                    <span class="back">
+                                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/eraser-icon.svg" alt="">
+                                    </span>
+                                    <span class="front">manager</span>
+                                </button> 
+                                </div>
+                            </li>    
+                        </ul>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="./createloan.js"></script>
+
+</body>
+</html>

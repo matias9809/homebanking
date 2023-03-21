@@ -15,11 +15,11 @@ public class ServicesClientLoanImpl implements ServicesClientLoan {
 
     @Override
     public List<ClientLoan> findAll() {
-        return null;
+        return clientLoansRepository.findAll();
     }
 
     @Override
     public void save(ClientLoan clientLoan) {
-
+        clientLoansRepository.save(clientLoan);
     }
 }

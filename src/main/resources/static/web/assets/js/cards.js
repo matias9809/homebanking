@@ -15,7 +15,8 @@ createApp( {
             typeCard:"",
             colorCard:"",
             date:undefined,
-            bool:false
+            bool:false,
+            cardDelete:""
         }
     },
     created(){
@@ -32,11 +33,13 @@ createApp( {
                     this.account=this.client.account
                 }
                 this.cards=response.data.cards
-                let fecha=new Date(this.cards[1].fromDate).toISOString().slice(0,10)
-                console.log(this.cards[1].fromDate);
-                console.log(fecha);
-                this.cards_debit=this.cards.filter(cards=>cards.type=='DEBIT')
-                this.cards_credit=this.cards.filter(cards=>cards.type=='CREDIT')
+                if(response.data.cards.filter(card=>card.type=='DEBIT').length>0){
+                    this.cards_debit=[...response.data.cards.filter(cards=>cards.type=='DEBIT')]
+                }
+                if(response.data.cards.filter(card=>card.type=='CREDIT').length>0){
+                    this.cards_credit=[...response.data.cards.filter(cards=>cards.type=='CREDIT')]
+                }
+                console.log(this.cards_credit,this.cards_debit);
             })
             .catch(err=>console.log(err))
         },
@@ -49,7 +52,7 @@ createApp( {
                 axios.post('/api/clients/current/accounts',{
                 headers:{'content-type':'application/x-www-form-urlencoded'}})
                 .then(response =>{
-                    console.log("your account was created successful"),
+                    alert("your account was created successful"),
                     this.load_data()
                     })
                 .catch(err=>alert(err))
@@ -60,10 +63,23 @@ createApp( {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             }).then(()=>{
+                alert("your card was created successful"),
                     window.location.href = '/web/cards.html';
                 })
             .catch(err=>alert(err))
         },
+        deleteCard(){
+            axios.patch(`/api/delete/card?number=${this.cardDelete}`,{
+                headers:{
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then(()=>{
+                    alert("your card was deleted successful"),
+                    this.load_data();
+                    window.location.href = '/web/cards.html';
+                })
+            .catch(err=>alert(err))
+        }
     },
 
 } ).mount("#app")

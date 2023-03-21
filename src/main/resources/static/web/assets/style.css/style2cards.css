@@ -631,6 +631,12 @@ a{
     border-right: 2px solid var(--white);
     transform: rotate(45deg);
   }
+  .p-expired{
+    color: red;
+    border: 2px solid red;
+    border-radius: 10px;
+    padding:2px !important;
+  }
   
   @media screen and (min-width: 600px) {
     .my-form .grid {
@@ -720,6 +726,9 @@ a{
         margin-right: 15px;
         margin-left: 15px;
     }
+    .button-card{
+        width: 50% !important;
+    }
 }
 
 @media (min-width: 768px){
@@ -743,7 +752,7 @@ a{
 
     .accounts-content a{
         margin: 7px;
-        width: 50%;
+        width: 85%;
     }
 
     .card {
@@ -757,6 +766,9 @@ a{
     .loans-data {
         margin-right: 10px;
         margin-left: 15px;
+    }
+    .button-card{
+        width: 60% !important;
     }
 }
 
@@ -775,6 +787,10 @@ a{
 
     .main-cards{
         display: flex;
+    }
+
+    .btn-create-card-container {
+        width: 100%;
     }
 
     .credit-card-section{
@@ -800,10 +816,7 @@ a{
         justify-content: center;
     }
 
-    .btn-create-card-container {
-        width: 18%;
-      
-    }
+
 
     .account-container {
         width: 100%;
@@ -839,6 +852,9 @@ a{
         height: fit-content;
         width: fit-content;
         border-radius: 1rem;
+    }
+    .button-card{
+        width: 100% !important;
     }
     .caja22 {
         font-size: 23px;

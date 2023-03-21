@@ -34,7 +34,7 @@ public class ControllerCard {
     public ResponseEntity<Object> deletecard(Authentication authentication,@RequestParam String number){
         Client client= servicesClient.findByEmail(authentication.getName());
         Card carddelete=servicesCard.findByNumber(number);
-        if (carddelete!=null){
+        if (carddelete==null){
             return new ResponseEntity<>("that card does not exist", HttpStatus.BAD_REQUEST);
         }
         if (client.getCards().stream().filter(card -> card.getNumber().equals(number))==null){
@@ -54,10 +54,10 @@ public class ControllerCard {
             @RequestParam TypeCard typeCard,
             @RequestParam ColorCard colorCard){
         Client client= servicesClient.findByEmail(authentication.getName());
-        if(client.getCards().stream().filter(card -> card.getType()==typeCard).collect(toSet()).size()>=3){
+        if(client.getCards().stream().filter(card -> card.getType()==typeCard&&card.getState()==State.ACTIVE).collect(toSet()).size()>=3){
             return new ResponseEntity<>("You have already reached the limit of 3 "+typeCard+" cards, you cannot be given another one", HttpStatus.BAD_REQUEST);
         }
-        if (servicesClient.findByEmail(authentication.getName()).getCards().stream().anyMatch(card -> card.getColor()==colorCard&&card.getType()==typeCard)){
+        if (servicesClient.findByEmail(authentication.getName()).getCards().stream().anyMatch(card -> card.getColor()==colorCard&&card.getType()==typeCard&&card.getState()==State.ACTIVE)){
             return new ResponseEntity<>("you have already the same card", HttpStatus.BAD_REQUEST);
         }
         Card card = new Card(client.getFirstname()+" "+client.getLastname(), typeCard, colorCard,NumberCards(servicesCard) , LocalDate.now(),LocalDate.now().plusYears(5));

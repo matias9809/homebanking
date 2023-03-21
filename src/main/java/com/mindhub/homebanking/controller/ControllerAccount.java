@@ -46,7 +46,7 @@ public class ControllerAccount {
 
     }
     @PatchMapping("/delete/account")
-    public ResponseEntity<Object> deleteAccount(Authentication authentication, String number){
+    public ResponseEntity<Object> deleteAccount(Authentication authentication,@RequestParam String number){
         Client client= servicesClient.findByEmail(authentication.getName());
         Account accountdelete=servicesAccount.findByNumber(number);
         if (accountdelete==null){
@@ -66,7 +66,7 @@ public class ControllerAccount {
         }
         accountdelete.setState(State.DESACTIVE);
         servicesAccount.save(accountdelete);
-        return new ResponseEntity<>("your card has been deleted successfully", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("your account has been deleted successfully", HttpStatus.OK);
     }
     @PostMapping("/clients/current/accounts")
     public ResponseEntity<Object> newAccount (Authentication authentication,@RequestParam TypeAccount typeAccount) {

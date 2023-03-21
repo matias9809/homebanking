@@ -30,7 +30,7 @@ public class Loan {
         this.name = name;
         this.maxAmount = maxAmount;
         this.payment = payment;
-        this.fees=fees;
+        this.fees=(fees/100)+1;
     }
 
     public Long getId() {

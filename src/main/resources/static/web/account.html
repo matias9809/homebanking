@@ -43,6 +43,9 @@
                                 <a class="nav-link text-white" href="./cards.html">Cards</a>
                             </li>
                             <li class="nav-item me-2">
+                                <a class="nav-link text-white" href="./transfers.html">transfer</a>
+                            </li>
+                            <li class="nav-item me-2">
                                 <a class="nav-link text-white" href="./loan-application.html">apply </a>
                             </li>
                         </div>
@@ -70,14 +73,18 @@
                             <template v-if="accountFilter">
                                 <div class="account-data" >
                                     <div class="number-account">
-                                    <p>Account number: {{accountFilter.number}}</p>
+                                    <p>Account number:  {{accountFilter.number}}</p>
                                     </div>
                                     <div class="balance-account">
-                                        <p>Total balance: ${{accountFilter.balance.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</p>
+                                        <p>Account type: {{accountFilter.typeAccount}}</p>
+                                    </div>
+                                    <div class="balance-account">
+                                        <p>Total balance:{{accountFilter.balance.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</p>
                                     </div>
                                     <div class="balance-account">
                                         <p>Creation Date: {{accountFilter.creationDate.slice(0,4)}}/{{accountFilter.creationDate.slice(5,7)}}/{{accountFilter.creationDate.slice(8,10)}}</p>
                                     </div>
+                                    
                                 </div>
                             </template>
                         </div>
@@ -93,6 +100,7 @@
                                         <th class="time">time</th>
                                         <th>Type</th>
                                         <th>Amount</th>
+                                        <th>balance</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -108,6 +116,7 @@
                                         <td class="DEBIT" v-else>{{transaction.type}}</td>
                                         <td class="CREDIT" v-if="transaction.type=='CREDIT'">{{transaction.amount.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
                                         <td class="DEBIT" v-else>{{transaction.amount.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
+                                        <td>{{transaction.balance.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
                                     </tr>
                                 </tbody>
                             </table>

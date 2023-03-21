@@ -46,7 +46,7 @@ createApp( {
         
     },
     methods: {
-        load_data:function(){
+        load_data(){
             axios.get(`/api/clients/current`)
             .then(response=>{
                 this.client=response.data;

@@ -7,8 +7,6 @@ createApp( {
             password:"",
             firstname:"",
             lastname:"",
-
-
         }
     },
     created(){
@@ -21,8 +19,11 @@ createApp( {
                     }
                 })
                 .then((response) => {
-                    if (response) {
-                        location.href = "./accounts.html";
+                    if(this.email == "ADMI@HOTMAIL.COM"){
+                        location.href = '/createloan.html'
+                    } 
+                    else{
+                        location.href = '/web/accounts.html'
                     }
                 })
                 .catch(err=>alert("Email or password was not correct"))

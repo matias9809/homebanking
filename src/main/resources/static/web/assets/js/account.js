@@ -16,7 +16,9 @@ createApp( {
             cards_credit:[],
             cards_debit:[],
             typeCard:"",
-            colorCard:""
+            colorCard:"",
+            accountDelete:"",
+            typeAccount:""
         }
     },
     created(){
@@ -61,24 +63,26 @@ createApp( {
             .catch(err=>console.log(err))
         },
         createAccount(){
-                axios.post('/api/clients/current/accounts',{
+                axios.post(`/api/clients/current/accounts?typeAccount=${this.typeAccount}`,{
                 headers:{'content-type':'application/x-www-form-urlencoded'}})
                 .then(response =>{
-                    console.log("your account was created successful"),
+                    alert("your account was created successful"),
                     this.load_data()
                     })
                 .catch(err=>alert(err))
         },
-        createCard(){
-            axios.post('/api/clients/current/cards',`typeCard=${this.typeCard}&colorCard=${this.colorCard}`,{
+        deleteAccount(){
+            console.log(this.accountDelete);
+            axios.patch(`/api/delete/account?number=${this.accountDelete}`,{
                 headers:{
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             }).then(()=>{
-                    window.location.href = '/web/cards.html';
+                    alert("deleted account successful")
+                    this.load_data();
                 })
             .catch(err=>alert(err))
-        },
-    },
+        }
+    }
 
 } ).mount("#app")

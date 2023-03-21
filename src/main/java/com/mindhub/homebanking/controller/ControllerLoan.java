@@ -1,7 +1,6 @@
 package com.mindhub.homebanking.controller;
 
 import com.mindhub.homebanking.DTO.LoanApplicationDTO;
-import com.mindhub.homebanking.DTO.LoanCreateDTO;
 import com.mindhub.homebanking.DTO.LoanDTO;
 import com.mindhub.homebanking.Services.*;
 import com.mindhub.homebanking.models.*;
@@ -89,24 +88,25 @@ public class ControllerLoan {
             return new ResponseEntity<>("loan request correctly",HttpStatus.CREATED);
     }
     @PostMapping("/create/loan")
-    public ResponseEntity<Object> createloan(Authentication authentication, @RequestBody LoanCreateDTO loanCreateDTO){
+    public ResponseEntity<Object> createloan(Authentication authentication, @RequestParam Integer maxamount,@RequestParam List<Integer> payment,
+                                             @RequestParam String name,@RequestParam Double fees){
         Client Admin= servicesClient.findByEmail(authentication.getName());
-        if (loanCreateDTO.getFees().isNaN()||loanCreateDTO.getFees()==null){
+        if (fees.isNaN()||fees==null){
             return new ResponseEntity<>("Missing fees", HttpStatus.BAD_REQUEST);
         }
-        if (loanCreateDTO.getMaxAmount()<1){
+       if (maxamount<1){
             return new ResponseEntity<>("Missing amount", HttpStatus.BAD_REQUEST);
         }
-        if (loanCreateDTO.getPayment()==null){
+        if (payment==null){
             return new ResponseEntity<>("Missing payment", HttpStatus.BAD_REQUEST);
         }
-        if (loanCreateDTO.getName().isEmpty()){
+        if (name.isEmpty()){
             return new ResponseEntity<>("Missing name", HttpStatus.BAD_REQUEST);
         }
-        if(servicesLoan.existsByName(loanCreateDTO.getName())){
+        if(servicesLoan.existsByName(name)){
             return new ResponseEntity<>("that loan already exists", HttpStatus.BAD_REQUEST);
         }
-        Loan loan=new Loan(loanCreateDTO.getName(),loanCreateDTO.getMaxAmount(),loanCreateDTO.getPayment(),loanCreateDTO.getFees());
+        Loan loan=new Loan(name,maxamount,payment,fees);
         servicesLoan.save(loan);
         return new ResponseEntity<>("loan created correctly",HttpStatus.CREATED);
     }

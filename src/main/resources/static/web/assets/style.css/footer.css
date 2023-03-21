@@ -42,6 +42,7 @@ a:hover{
 .a_active{
     border-bottom:2px solid blue !important;
     color: blue !important;
+    width: fit-content;
 }
 @media (min-width:767px) {
     footer{

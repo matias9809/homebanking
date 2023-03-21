@@ -53,13 +53,17 @@ public class ControllerTransaction {
 
         if (amount.isNaN()||amount==null){
             return new ResponseEntity<>("Missing amount", HttpStatus.BAD_REQUEST);
-        } else if (amount<0) {
+        }
+        if (amount<=0) {
             return new ResponseEntity<>("cannot transfer negative numbers", HttpStatus.BAD_REQUEST);
-        } else if (numberOrigin.isEmpty()) {
+        }
+        if (numberOrigin.isEmpty()) {
             return new ResponseEntity<>("Missing number origin", HttpStatus.BAD_REQUEST);
-        } else if (numberRecep.isEmpty()) {
+        }
+        if (numberRecep.isEmpty()) {
             return new ResponseEntity<>("Missing number receptor", HttpStatus.BAD_REQUEST);
-        } else if (description.isEmpty()) {
+        }
+        if (description.isEmpty()) {
             return new ResponseEntity<>("Missing description", HttpStatus.BAD_REQUEST);
         }
         if (numberOrigin.equals(numberRecep)){
@@ -95,7 +99,7 @@ public class ControllerTransaction {
     @PostMapping("/client/transaction/debit")
     public ResponseEntity<Object> transactionDebit(@RequestBody CardServicesDTO cardServicesDTO){
         Card card= servicesCard.findByNumber(cardServicesDTO.getNumber());
-        Account account= card.getClient().getAccount().stream().filter(account1 -> account1.getBalance()>=cardServicesDTO.getAmount()).findFirst().get();
+
 
         if (cardServicesDTO.getNumber().isEmpty()){
             return new ResponseEntity<>("I did not enter the card number", HttpStatus.BAD_REQUEST);
@@ -112,11 +116,12 @@ public class ControllerTransaction {
         if(card==null){
             return new ResponseEntity<>("the card does not exist", HttpStatus.BAD_REQUEST);
         }
+        Account account= card.getClient().getAccount().stream().filter(account1 -> account1.getBalance()>=cardServicesDTO.getAmount()&&account1.getState()==State.ACTIVE).findFirst().get();
         if (account.getBalance()<cardServicesDTO.getAmount()||account==null){
             return new ResponseEntity<>("Insufficient fund to carry out the transaction", HttpStatus.BAD_REQUEST);
         }
         if (card.getType()==TypeCard.CREDIT){
-            return new ResponseEntity<>("Missing description", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("card type is not debit", HttpStatus.BAD_REQUEST);
         }
         if (card.getState()==State.DESACTIVE){
             return new ResponseEntity<>("this card is not valid", HttpStatus.BAD_REQUEST);

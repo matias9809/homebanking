@@ -53,16 +53,18 @@ public class ControllerClient {
 
             @RequestParam String firstName, @RequestParam String lastName,
 
-            @RequestParam String email, @RequestParam String password, @RequestParam TypeAccount typeAccount) {
+            @RequestParam String email, @RequestParam String password) {
 
         if (firstName.isEmpty()) {
             return new ResponseEntity<>("Missing firstname", HttpStatus.BAD_REQUEST);
         }
-        else if (lastName.isEmpty()) {
+        if (lastName.isEmpty()) {
             return new ResponseEntity<>("Missing lastname", HttpStatus.BAD_REQUEST);
-        } else if (email.isEmpty() ) {
+        }
+        if (email.isEmpty() ) {
             return new ResponseEntity<>("Missing email", HttpStatus.BAD_REQUEST);
-        } else if (password.isEmpty()) {
+        }
+        if (password.isEmpty()) {
             return new ResponseEntity<>("Missing password", HttpStatus.BAD_REQUEST);
         }
 
@@ -74,12 +76,13 @@ public class ControllerClient {
 
         Client clientNewUser=new Client(firstName, lastName, email, passwordEncoder.encode(password));
 
-        Account accountNewUser=new Account(AccountNumber(servicesAccount), LocalDateTime.now(),0.00,typeAccount);
+        Account accountNewUser=new Account(AccountNumber(servicesAccount), LocalDateTime.now(),0.00,TypeAccount.SAVINGS);
         clientNewUser.addAccounts(accountNewUser);
+
         servicesClient.save(clientNewUser);
         servicesAccount.save(accountNewUser);
-        return new ResponseEntity<>("user created successfully",HttpStatus.CREATED);
 
+        return new ResponseEntity<>("user created successfully",HttpStatus.CREATED);
     }
 
 
