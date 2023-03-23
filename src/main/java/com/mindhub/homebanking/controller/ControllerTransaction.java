@@ -54,8 +54,8 @@ public class ControllerTransaction {
         if (amount.isNaN()||amount==null){
             return new ResponseEntity<>("Missing amount", HttpStatus.BAD_REQUEST);
         }
-        if (amount<=0) {
-            return new ResponseEntity<>("cannot transfer negative numbers", HttpStatus.BAD_REQUEST);
+        if (amount<1) {
+            return new ResponseEntity<>("cannot transfer negative amount", HttpStatus.BAD_REQUEST);
         }
         if (numberOrigin.isEmpty()) {
             return new ResponseEntity<>("Missing number origin", HttpStatus.BAD_REQUEST);
@@ -100,7 +100,6 @@ public class ControllerTransaction {
     public ResponseEntity<Object> transactionDebit(@RequestBody CardServicesDTO cardServicesDTO){
         Card card= servicesCard.findByNumber(cardServicesDTO.getNumber());
 
-
         if (cardServicesDTO.getNumber().isEmpty()){
             return new ResponseEntity<>("I did not enter the card number", HttpStatus.BAD_REQUEST);
         }
@@ -116,6 +115,9 @@ public class ControllerTransaction {
         if(card==null){
             return new ResponseEntity<>("the card does not exist", HttpStatus.BAD_REQUEST);
         }
+        if (cardServicesDTO.getAmount()<=0) {
+            return new ResponseEntity<>("cannot transfer negative amount", HttpStatus.BAD_REQUEST);
+        }
         Account account= card.getClient().getAccount().stream().filter(account1 -> account1.getBalance()>=cardServicesDTO.getAmount()&&account1.getState()==State.ACTIVE).findFirst().get();
         if (account.getBalance()<cardServicesDTO.getAmount()||account==null){
             return new ResponseEntity<>("Insufficient fund to carry out the transaction", HttpStatus.BAD_REQUEST);
@@ -126,6 +128,9 @@ public class ControllerTransaction {
         if (card.getState()==State.DESACTIVE){
             return new ResponseEntity<>("this card is not valid", HttpStatus.BAD_REQUEST);
         }
+//        if(card.getThruDate()==LocalDate.now()){
+//            return new ResponseEntity<>("your card is expired",HttpStatus.BAD_REQUEST);
+//        }
         if (card.getCvv()!= cardServicesDTO.getCvv()){
             return new ResponseEntity<>("the data entered is incorrect", HttpStatus.BAD_REQUEST);
         }

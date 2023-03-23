@@ -20,6 +20,7 @@ main{
     margin-top: 2rem;
     margin-right: unset;
     margin-left: 2rem;
+    height: 200px;
 }
 .p_desc{
     border: 2px solid #648ca6;
@@ -27,7 +28,7 @@ main{
     color: aliceblue;
     background-color: #648ca6;
     overflow-y: scroll;
-    height: 200px;
+    height: 200px !important;
     padding: 15px !important;
 }
 ::-webkit-scrollbar {
@@ -76,5 +77,8 @@ main{
         margin-right: 3rem;
         width: 400px;
          margin-top: unset;
+    }
+    .section2_index{
+        height: 73vh;
     }
 }

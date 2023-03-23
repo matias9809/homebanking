@@ -6,7 +6,6 @@ createApp( {
             maxAmount:"",
             payment:"",
             fees:""
-
         }
     },
     created(){

@@ -2,8 +2,7 @@ package com.mindhub.homebanking.utilities;
 
 import com.mindhub.homebanking.Services.ServicesAccount;
 import com.mindhub.homebanking.Services.ServicesCard;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.CardRepository;
+
 
 public class Utils {
     public static String GenereteNumberRandomsAccount(){

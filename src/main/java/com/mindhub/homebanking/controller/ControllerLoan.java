@@ -51,10 +51,15 @@ public class ControllerLoan {
 
             if (loanApplicationDTO.getAmount().isNaN()||loanApplicationDTO.getAmount()==null){
                 return new ResponseEntity<>("Missing amount", HttpStatus.BAD_REQUEST);
-            } else if (loanApplicationDTO.getNumberAccount().isEmpty()) {
+            }
+            if (loanApplicationDTO.getNumberAccount().isEmpty()) {
                 return new ResponseEntity<>("Missing number origin", HttpStatus.BAD_REQUEST);
-            } else if (loanApplicationDTO.getPayment()<1) {
-                return new ResponseEntity<>("Missing number receptor", HttpStatus.BAD_REQUEST);
+            }
+            if (loanApplicationDTO.getPayment()<1) {
+                return new ResponseEntity<>("number of installments not allowed", HttpStatus.BAD_REQUEST);
+            }
+            if(loanApplicationDTO.getAmount()<=0){
+                return new ResponseEntity<>("cannot transfer negative amount", HttpStatus.BAD_REQUEST);
             }
             if (!servicesLoan.existsById(loanApplicationDTO.getId_prestamo())){
                 return new ResponseEntity<>("the requested loan does not exist", HttpStatus.BAD_REQUEST);
@@ -95,10 +100,16 @@ public class ControllerLoan {
             return new ResponseEntity<>("Missing fees", HttpStatus.BAD_REQUEST);
         }
        if (maxamount<1){
-            return new ResponseEntity<>("Missing amount", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("amount must be greater than 1", HttpStatus.BAD_REQUEST);
         }
+       if (maxamount==null){
+           return new ResponseEntity<>("missing amount", HttpStatus.BAD_REQUEST);
+       }
         if (payment==null){
             return new ResponseEntity<>("Missing payment", HttpStatus.BAD_REQUEST);
+        }
+        if (payment.stream().anyMatch(payments->payments<1)){
+            return new ResponseEntity<>("odds must be greater than 1", HttpStatus.BAD_REQUEST);
         }
         if (name.isEmpty()){
             return new ResponseEntity<>("Missing name", HttpStatus.BAD_REQUEST);
